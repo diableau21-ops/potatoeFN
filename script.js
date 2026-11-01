@@ -155,7 +155,7 @@ document.getElementById("download-colors").addEventListener("click", () => {
     "Ces valeurs sont un point de départ, pas des réglages universels.",
     "Ajuste-les progressivement dans le panneau de contrôle graphique de ton PC.",
     "Le fichier ne modifie pas automatiquement Fortnite ni les couleurs de Windows."
-  ].join("\\n");
+  ].join("\n");
   saveTextFile("PotatoFN-couleurs.txt", content, "text/plain;charset=utf-8");
 });
 
@@ -164,3 +164,45 @@ document.getElementById("download-colors").addEventListener("click", () => {
 document.getElementById("download-sidebar").addEventListener("click", () => {
   downloadButton.click();
 });
+
+
+// Companion mode: shows a guide beside Fortnite without changing the running game.
+const companionButton = document.getElementById("open-companion");
+if (companionButton) {
+  companionButton.addEventListener("click", () => {
+    const oldPanel = document.getElementById("potatofn-companion");
+    if (oldPanel) oldPanel.remove();
+
+    const mode = document.getElementById("mode").value;
+    const resolution = document.getElementById("resolution-select").value;
+    const fps = document.getElementById("fps").value;
+
+    const overlay = document.createElement("div");
+    overlay.id = "potatofn-companion";
+    overlay.style.cssText = "position:fixed;inset:0;z-index:9999;background:rgba(4,3,9,.88);display:grid;place-items:center;padding:18px;";
+    overlay.innerHTML = `
+      <section role="dialog" aria-modal="true" aria-labelledby="companion-title" style="width:min(560px,100%);max-height:90vh;overflow:auto;background:#151020;border:1px solid #9b5cff;border-radius:14px;padding:26px;color:#f7f4ff;font-family:Inter,Arial,sans-serif;box-shadow:0 20px 80px #000;">
+        <div style="color:#bd83ff;font-size:10px;letter-spacing:2px;font-weight:800;">POTATOFN / MODE COMPAGNON</div>
+        <h2 id="companion-title" style="font-family:Orbitron,Arial,sans-serif;font-size:22px;margin:12px 0;">Ton guide de réglages</h2>
+        <p style="color:#b8aec8;font-size:13px;line-height:1.6;">Garde cette fenêtre ouverte à côté de Fortnite (ou consulte-la avant de retourner au jeu). Elle ne modifie pas le jeu en direct.</p>
+        <div style="background:#21172f;border-radius:9px;padding:14px;margin:16px 0;font-size:13px;line-height:1.9;">
+          <strong>Ton profil choisi</strong><br>
+          Mode : ${mode}<br>
+          Résolution : ${resolution}<br>
+          Limite FPS : ${fps}
+        </div>
+        <ol style="color:#ddd3e9;font-size:13px;line-height:1.9;padding-left:20px;">
+          <li>Ouvre les paramètres de Fortnite.</li>
+          <li>Dans Vidéo, sélectionne le mode graphique choisi si disponible.</li>
+          <li>Règle la résolution et le mode plein écran selon les options proposées.</li>
+          <li>Règle la limite d’images par seconde.</li>
+          <li>Applique les changements et vérifie que l’image te convient.</li>
+        </ol>
+        <p style="color:#a99bb9;font-size:11px;line-height:1.6;">Pour modifier le fichier de configuration avec l’outil Windows, ferme d’abord Fortnite. N’exécute pas le script pendant que le jeu est ouvert.</p>
+        <button id="close-potatofn-companion" type="button" style="border:0;border-radius:8px;background:linear-gradient(105deg,#8748e8,#c04ce9);color:white;padding:12px 18px;font-weight:800;cursor:pointer;">Fermer le guide</button>
+      </section>`;
+    document.body.appendChild(overlay);
+    document.getElementById("close-potatofn-companion").addEventListener("click", () => overlay.remove());
+    overlay.addEventListener("click", event => { if (event.target === overlay) overlay.remove(); });
+  });
+}
