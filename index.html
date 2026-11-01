@@ -15,7 +15,7 @@
   <div class="ambient ambient-one"></div><div class="ambient ambient-two"></div>
   <header class="topbar">
     <a class="brand" href="#"><span class="brand-mark">P</span><span>POTATO<span class="accent">FN</span></span></a>
-    <nav><a href="#settings">Réglages</a><a href="#resolution">Résolution</a><a href="#guide">Guide</a></nav>
+    <nav><a href="#settings">Réglages</a><a href="#resolution">Résolution</a><a href="#colors">Couleurs</a><a href="#guide">Guide</a></nav>
     <a class="top-cta" href="#settings">Commencer <span>↗</span></a>
   </header>
 
@@ -63,6 +63,24 @@
       </div>
       <div class="download-strip"><div><div class="card-label">WINDOWS TOOL</div><h3>Applique tes réglages plus facilement</h3><p>Télécharge l’outil PotatoFN pour sauvegarder puis modifier les réglages compatibles de Fortnite.</p></div><div class="hero-actions"><button class="button primary" id="download-tool">Télécharger l’outil Windows <span>↓</span></button><button class="button secondary" id="download">Télécharger le preset texte</button></div></div>
       <p class="notice"><strong>Important :</strong> l’outil crée d’abord une copie de sauvegarde du fichier de configuration, puis règle la résolution et les FPS. Le mode graphique doit encore être choisi dans Fortnite. Le rendu étiré dépend aussi des réglages de mise à l’échelle de ta carte graphique. Lis le script avant de l’exécuter.</p>
+    </section>
+
+
+    <section class="section" id="colors">
+      <div class="section-heading"><div><div class="eyebrow">02 / DISPLAY LOOK</div><h2>COULEURS <span>NATURELLES</span></h2></div><p>Prépare des valeurs de départ pour obtenir une image moins saturée et plus naturelle.</p></div>
+      <div class="color-tool">
+        <div class="color-preview" id="color-preview"><span>APERÇU DES COULEURS</span><strong>FORTNITE</strong><small>Exemple visuel seulement</small></div>
+        <div class="color-controls">
+          <label for="saturation">Saturation <output id="saturation-value">85%</output></label>
+          <input id="saturation" type="range" min="50" max="120" value="85">
+          <label for="contrast">Contraste <output id="contrast-value">100%</output></label>
+          <input id="contrast" type="range" min="80" max="120" value="100">
+          <label for="brightness">Luminosité <output id="brightness-value">100%</output></label>
+          <input id="brightness" type="range" min="80" max="120" value="100">
+          <button class="button secondary" id="download-colors">Télécharger mes valeurs couleur</button>
+          <p class="hint">Ces curseurs montrent un aperçu sur cette page et préparent des valeurs à régler manuellement dans le panneau graphique de Windows ou de ta carte vidéo. Ils ne changent pas les couleurs de Fortnite à eux seuls.</p>
+        </div>
+      </div>
     </section>
 
     <section class="section guide-section" id="guide">
