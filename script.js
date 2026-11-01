@@ -116,13 +116,20 @@ Write-Host "Résolution : ${width} x ${height}"
 Write-Host "Limite FPS : ${fpsChoice}"
 Write-Host "Sauvegarde créée : $backupFile"
 Write-Host ""
-Write-Host "Relance Fortnite et vérifie les paramètres Vidéo."
-Write-Host "Si le jeu remplace ces valeurs, règle-les dans Fortnite."
+Write-Host "Démarrage de Fortnite..."
+Write-Host "Le jeu peut remplacer certaines valeurs au démarrage."
+try {
+    Start-Process "com.epicgames.launcher://apps/Fortnite?action=launch&silent=true"
+    Write-Host "La demande de lancement a été envoyée à Epic Games Launcher." -ForegroundColor Green
+} catch {
+    Write-Host "Impossible de lancer Fortnite automatiquement." -ForegroundColor Yellow
+    Write-Host "Ouvre Epic Games Launcher et démarre Fortnite manuellement."
+}
 Read-Host "Appuie sur Entrée pour fermer"
 `;
 
   saveTextFile("PotatoFN-ApplySettings.ps1", powershell, "text/plain;charset=utf-8");
-  alert("Outil téléchargé ! Ferme Fortnite. Clique droit sur PotatoFN-ApplySettings.ps1 puis choisis « Exécuter avec PowerShell ». Lis le script avant de le lancer.");
+  alert("Fichier téléchargé ! Ferme Fortnite, puis clique droit sur PotatoFN-ApplySettings.ps1 et choisis « Exécuter avec PowerShell ». Le script prépare les réglages compatibles puis demande à Epic Games Launcher de démarrer Fortnite. Lis le script avant de le lancer.");
 });
 
 
