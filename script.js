@@ -10,7 +10,7 @@ function saveTextFile(filename, content, type) {
   document.body.appendChild(link);
   link.click();
   link.remove();
-  URL.revokeObjectURL(url);
+  setTimeout(() => URL.revokeObjectURL(url), 1000);
 }
 
 downloadButton.addEventListener("click", () => {
@@ -157,4 +157,10 @@ document.getElementById("download-colors").addEventListener("click", () => {
     "Le fichier ne modifie pas automatiquement Fortnite ni les couleurs de Windows."
   ].join("\\n");
   saveTextFile("PotatoFN-couleurs.txt", content, "text/plain;charset=utf-8");
+});
+
+
+// The sidebar download button downloads the selected preset.
+document.getElementById("download-sidebar").addEventListener("click", () => {
+  downloadButton.click();
 });
