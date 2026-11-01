@@ -44,7 +44,7 @@ toolButton.addEventListener("click", () => {
   const height = Number(dimensions[2]);
   const fps = fpsChoice === "Illimité" ? 0 : Number(fpsChoice.match(/\d+/)?.[0] || 0);
 
-  const powershell = \`# PotatoFN — outil de réglages Fortnite
+  const powershell = `# PotatoFN — outil de réglages Fortnite
 # Lis ce fichier avant de l'exécuter. Aucun fichier du jeu ou anti-triche n'est modifié.
 $ErrorActionPreference = "Stop"
 $configFolder = Join-Path $env:LOCALAPPDATA "FortniteGame\\Saved\\Config\\WindowsClient"
@@ -119,7 +119,7 @@ Write-Host ""
 Write-Host "Relance Fortnite et vérifie les paramètres Vidéo."
 Write-Host "Si le jeu remplace ces valeurs, règle-les dans Fortnite."
 Read-Host "Appuie sur Entrée pour fermer"
-\`;
+`;
 
   saveTextFile("PotatoFN-ApplySettings.ps1", powershell, "text/plain;charset=utf-8");
   alert("Outil téléchargé ! Ferme Fortnite. Clique droit sur PotatoFN-ApplySettings.ps1 puis choisis « Exécuter avec PowerShell ». Lis le script avant de le lancer.");
