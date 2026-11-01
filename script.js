@@ -124,3 +124,37 @@ Read-Host "Appuie sur Entrée pour fermer"
   saveTextFile("PotatoFN-ApplySettings.ps1", powershell, "text/plain;charset=utf-8");
   alert("Outil téléchargé ! Ferme Fortnite. Clique droit sur PotatoFN-ApplySettings.ps1 puis choisis « Exécuter avec PowerShell ». Lis le script avant de le lancer.");
 });
+
+
+// Natural color preview and manual settings guide.
+const colorInputs = ["saturation", "contrast", "brightness"];
+function updateColorPreview() {
+  const saturation = Number(document.getElementById("saturation").value);
+  const contrast = Number(document.getElementById("contrast").value);
+  const brightness = Number(document.getElementById("brightness").value);
+  document.getElementById("saturation-value").textContent = saturation + "%";
+  document.getElementById("contrast-value").textContent = contrast + "%";
+  document.getElementById("brightness-value").textContent = brightness + "%";
+  document.getElementById("color-preview").style.filter =
+    "saturate(" + saturation / 100 + ") contrast(" + contrast / 100 + ") brightness(" + brightness / 100 + ")";
+}
+colorInputs.forEach(id => document.getElementById(id).addEventListener("input", updateColorPreview));
+updateColorPreview();
+
+document.getElementById("download-colors").addEventListener("click", () => {
+  const saturation = document.getElementById("saturation").value;
+  const contrast = document.getElementById("contrast").value;
+  const brightness = document.getElementById("brightness").value;
+  const content = [
+    "POTATOFN — VALEURS DE COULEURS NATURELLES",
+    "",
+    "Saturation suggérée : " + saturation + "%",
+    "Contraste suggéré : " + contrast + "%",
+    "Luminosité suggérée : " + brightness + "%",
+    "",
+    "Ces valeurs sont un point de départ, pas des réglages universels.",
+    "Ajuste-les progressivement dans le panneau de contrôle graphique de ton PC.",
+    "Le fichier ne modifie pas automatiquement Fortnite ni les couleurs de Windows."
+  ].join("\\n");
+  saveTextFile("PotatoFN-couleurs.txt", content, "text/plain;charset=utf-8");
+});
