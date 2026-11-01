@@ -213,3 +213,73 @@ if (companionButton) {
     overlay.addEventListener("click", event => { if (event.target === overlay) overlay.remove(); });
   });
 }
+
+
+// Desktop shortcut customizer: only edits the selected Windows .lnk shortcut.
+const shortcutNameInput = document.getElementById("shortcut-name");
+if (shortcutNameInput) {
+  const preview = document.getElementById("shortcut-preview-name");
+  shortcutNameInput.addEventListener("input", () => {
+    preview.textContent = shortcutNameInput.value.trim() || "Fortnite";
+  });
+  document.getElementById("download-shortcut-tool").addEventListener("click", () => {
+    const chosenName = shortcutNameInput.value.trim().replace(/[\\/:*?"<>|]/g, "").replace(/[. ]+$/g, "");
+    if (!chosenName) { alert("Entre un nom valide pour le raccourci."); return; }
+    const iconChoice = document.getElementById("shortcut-icon").value;
+    const psName = chosenName.replace(/'/g, "''");
+    const powershell = String.raw`# PotatoFN — personnaliser le raccourci Fortnite du bureau
+$ErrorActionPreference = "Stop"
+$desktop = [Environment]::GetFolderPath("Desktop")
+$ws = New-Object -ComObject WScript.Shell
+$links = @(Get-ChildItem -LiteralPath $desktop -Filter "*.lnk" -File -ErrorAction SilentlyContinue)
+$matches = @()
+foreach ($file in $links) {
+  try {
+    $sc = $ws.CreateShortcut($file.FullName)
+    if ($file.BaseName -match "Fortnite" -or $sc.TargetPath -match "Fortnite" -or $sc.Arguments -match "Fortnite") { $matches += $file }
+  } catch {}
+}
+$selected = $null
+if ($matches.Count -eq 1) { $selected = $matches[0] }
+elseif ($matches.Count -gt 1) {
+  Write-Host "Plusieurs raccourcis Fortnite ont été trouvés :" -ForegroundColor Cyan
+  for ($i=0; $i -lt $matches.Count; $i++) { Write-Host "$($i+1). $($matches[$i].Name)" }
+  $pick = Read-Host "Entre le numéro du raccourci à modifier"
+  $number = 0
+  if ([int]::TryParse($pick, [ref]$number) -and $number -ge 1 -and $number -le $matches.Count) { $selected = $matches[$number-1] }
+}
+if (-not $selected) {
+  Add-Type -AssemblyName System.Windows.Forms
+  $dialog = New-Object System.Windows.Forms.OpenFileDialog
+  $dialog.InitialDirectory = $desktop
+  $dialog.Filter = "Raccourcis Windows (*.lnk)|*.lnk"
+  $dialog.Title = "Choisis le raccourci Fortnite de ton bureau"
+  if ($dialog.ShowDialog() -eq [System.Windows.Forms.DialogResult]::OK) { $selected = Get-Item -LiteralPath $dialog.FileName }
+}
+if (-not $selected) { Write-Host "Aucun raccourci choisi. Rien n'a été modifié."; Read-Host "Entrée pour fermer"; exit }
+$shortcut = $ws.CreateShortcut($selected.FullName)
+$backup = "$($selected.FullName).PotatoFN-backup"
+Copy-Item -LiteralPath $selected.FullName -Destination $backup -Force
+$newName = '__NEWNAME__'
+$iconChoice = '__ICONCHOICE__'
+$newPath = Join-Path $desktop ($newName + ".lnk")
+if ((Test-Path -LiteralPath $newPath) -and ($newPath -ne $selected.FullName)) { Write-Host "Un raccourci portant déjà ce nom existe. Choisis un autre nom."; Read-Host "Entrée pour fermer"; exit }
+if ($iconChoice -eq "epic") {
+  $epicCandidates = @("$env:ProgramFiles(x86)\Epic Games\Launcher\Portal\Binaries\Win64\EpicGamesLauncher.exe", "$env:ProgramFiles\Epic Games\Launcher\Portal\Binaries\Win64\EpicGamesLauncher.exe")
+  $epicExe = $epicCandidates | Where-Object { Test-Path -LiteralPath $_ } | Select-Object -First 1
+  if ($epicExe) { $shortcut.IconLocation = "$epicExe,0" } else { Write-Host "Epic Games Launcher introuvable : l'icône actuelle sera conservée." -ForegroundColor Yellow }
+} elseif ($iconChoice -eq "windows") {
+  $shortcut.IconLocation = "$env:SystemRoot\System32\shell32.dll,167"
+}
+$shortcut.Save()
+if ($newPath -ne $selected.FullName) { Move-Item -LiteralPath $selected.FullName -Destination $newPath }
+Write-Host "Raccourci mis à jour : $newPath" -ForegroundColor Green
+Write-Host "Sauvegarde : $backup"
+Write-Host "Actualise le bureau avec F5 si l'icône ne se rafraîchit pas."
+Read-Host "Appuie sur Entrée pour fermer"
+`;
+    const finalScript = powershell.replace("__NEWNAME__", psName).replace("__ICONCHOICE__", iconChoice);
+    saveTextFile("PotatoFN-Customiser-Raccourci.ps1", finalScript, "text/plain;charset=utf-8");
+    alert("Outil téléchargé ! Lis le script avant de l’exécuter avec PowerShell. Il te fera choisir le raccourci Fortnite et créera une sauvegarde.");
+  });
+}
