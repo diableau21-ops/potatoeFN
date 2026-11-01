@@ -13,3 +13,27 @@
 .color-controls input[type=range]{width:100%;accent-color:#a96bfa;margin:0 0 12px}
 .color-controls .button{align-self:flex-start}
 @media(max-width:760px){.color-tool{grid-template-columns:1fr}.color-preview{min-height:180px}}
+
+/* Fixed left settings sidebar */
+.side-menu{position:fixed;z-index:20;left:0;top:0;bottom:0;width:218px;padding:22px 16px;background:rgba(13,10,22,.97);border-right:1px solid var(--line);display:flex;flex-direction:column;gap:9px;backdrop-filter:blur(16px)}
+.side-brand{display:flex;align-items:center;gap:9px;color:#fff;text-decoration:none;font:800 13px Orbitron,sans-serif;letter-spacing:1px;padding:2px 4px 28px}
+.side-brand .brand-mark{width:31px;height:31px;font-size:17px}
+.side-label{font:700 9px Orbitron,sans-serif;letter-spacing:2px;color:#817391;padding:0 9px 8px}
+.side-menu>a:not(.side-brand){display:flex;align-items:center;gap:12px;padding:12px 10px;border:1px solid transparent;border-radius:8px;color:#b9adc9;text-decoration:none;font-size:11px}
+.side-menu>a:not(.side-brand):hover{background:#21152f;border-color:#8051aa;color:#fff}
+.side-menu>a:not(.side-brand)::first-letter{color:#bd82ff}
+.side-download{margin-top:auto;padding:14px 10px 8px;border-top:1px solid var(--line)}
+.side-download small{display:block;color:#9c89b0;font:700 8px Orbitron,sans-serif;letter-spacing:1.5px;margin-bottom:10px}
+.side-download .button{width:100%;justify-content:center;padding:12px 8px;font-size:10px}
+.page-content{margin-left:218px;max-width:calc(1180px + 52px);padding-left:26px;padding-right:26px}
+.topbar{margin-left:218px;max-width:calc(1180px + 52px)}
+footer{margin-left:218px;max-width:calc(1180px + 52px)}
+@media(max-width:760px){
+ .side-menu{position:sticky;top:0;bottom:auto;width:100%;height:auto;padding:8px 12px;display:flex;flex-direction:row;align-items:center;gap:5px;overflow-x:auto;border-right:0;border-bottom:1px solid var(--line)}
+ .side-brand{padding:0 8px 0 0;flex:0 0 auto;font-size:10px}
+ .side-brand .brand-mark{width:27px;height:27px}
+ .side-label,.side-download{display:none}
+ .side-menu>a:not(.side-brand){flex:0 0 auto;padding:9px 10px;font-size:10px}
+ .side-menu>a:not(.side-brand) span{white-space:nowrap}
+ .page-content,.topbar,footer{margin-left:0;max-width:1180px}
+}
