@@ -94,26 +94,26 @@ function Set-IniValue([string]$Section, [string]$Key, [string]$Value) {
 }
 
 $engineSection = "/Script/Engine.GameUserSettings"
-Set-IniValue $engineSection "ResolutionSizeX" "\${width}"
-Set-IniValue $engineSection "ResolutionSizeY" "\${height}"
-Set-IniValue $engineSection "LastUserConfirmedResolutionSizeX" "\${width}"
-Set-IniValue $engineSection "LastUserConfirmedResolutionSizeY" "\${height}"
-Set-IniValue $engineSection "DesiredScreenWidth" "\${width}"
-Set-IniValue $engineSection "DesiredScreenHeight" "\${height}"
-Set-IniValue $engineSection "LastUserConfirmedDesiredScreenWidth" "\${width}"
-Set-IniValue $engineSection "LastUserConfirmedDesiredScreenHeight" "\${height}"
+Set-IniValue $engineSection "ResolutionSizeX" "${width}"
+Set-IniValue $engineSection "ResolutionSizeY" "${height}"
+Set-IniValue $engineSection "LastUserConfirmedResolutionSizeX" "${width}"
+Set-IniValue $engineSection "LastUserConfirmedResolutionSizeY" "${height}"
+Set-IniValue $engineSection "DesiredScreenWidth" "${width}"
+Set-IniValue $engineSection "DesiredScreenHeight" "${height}"
+Set-IniValue $engineSection "LastUserConfirmedDesiredScreenWidth" "${width}"
+Set-IniValue $engineSection "LastUserConfirmedDesiredScreenHeight" "${height}"
 Set-IniValue $engineSection "FullscreenMode" "0"
 Set-IniValue $engineSection "LastConfirmedFullscreenMode" "0"
 Set-IniValue $engineSection "PreferredFullscreenMode" "0"
 
 $fortniteSection = "/Script/FortniteGame.FortGameUserSettings"
-Set-IniValue $fortniteSection "FrameRateLimit" "\${fps}.000000"
+Set-IniValue $fortniteSection "FrameRateLimit" "${fps}.000000"
 
 [System.IO.File]::WriteAllLines($configFile, $lines, [System.Text.UTF8Encoding]::new($false))
 Write-Host ""
 Write-Host "Réglages PotatoFN appliqués !" -ForegroundColor Green
-Write-Host "Résolution : \${width} x \${height}"
-Write-Host "Limite FPS : \${fpsChoice}"
+Write-Host "Résolution : ${width} x ${height}"
+Write-Host "Limite FPS : ${fpsChoice}"
 Write-Host "Sauvegarde créée : $backupFile"
 Write-Host ""
 Write-Host "Relance Fortnite et vérifie les paramètres Vidéo."
